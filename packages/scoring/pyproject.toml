@@ -1,0 +1,13 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "jobforge-scoring"
+version = "0.1.0"
+description = "Job matching & scoring engine for JobForge"
+requires-python = ">=3.11"
+dependencies = ["jobforge-shared>=0.1.0"]
+
+[tool.setuptools]
+packages = ["jf_scoring"]
