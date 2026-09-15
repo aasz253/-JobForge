@@ -1,0 +1,56 @@
+name: forge-ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+          cache: pip
+
+      # Python packages (shared, ai ring, api) must compile with no syntax errors.
+      - name: Python compile (py_compile smoke)
+        run: |
+          for p in packages/shared packages/ai packages/api; do
+            python3 -m py_compile $(find "$p" -name "*.py" -o -name "*.py" 2>/dev/null | grep -v __pycache__) >/dev/null 2>&1 || true
+          done
+          python3 - <<'EOF'
+          import pathlib
+          bad = 0
+          for p in ["packages/shared", "packages/ai", "apps/api"]:
+              for f in pathlib.Path(p).rglob("*.py"):
+                  try:
+                      compile(f.read_text(), str(f), "exec")
+                  except Exception as e:
+                      bad += 1
+                      print(f"FAIL {f}: {e}")
+          print(f"py-compile: {'OK' if bad == 0 else f'{bad} file(s) failed'}")
+          exit(bad)
+          EOF
+
+      # Web app: strict TS — never let the LLM seam accrete type drift.
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: npm
+          cache-dependency-path: apps/web/package-lock.json
+
+      - name: Install web deps
+        run: npm ci
+        working-directory: apps/web
+
+      - name: Typecheck (tsc --noEmit)
+        run: npx tsc --noEmit
+        working-directory: apps/web
+
+      - name: Production build (next build)
+        run: npm run build
+        working-directory: apps/web
