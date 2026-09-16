@@ -66,7 +66,7 @@ export default function ApplicationsPage() {
         </div>
       )}
 
-      <section className="grid grid-cols-2 gap-3 overflow-x-auto md:grid-cols-4 lg:grid-cols-5">
+      <section className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-5">
         {columns.map((c) => {
           const list = byStatus(c.v);
           return (

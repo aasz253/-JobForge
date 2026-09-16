@@ -4,7 +4,35 @@ from __future__ import annotations
 
 from datetime import datetime
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, field_validator
+
+
+
+class ApplicationCreateIn(BaseModel):
+    job_id: int | None = None
+    company: str = Field(default="", max_length=200)
+    title: str = Field(default="", max_length=300)
+    application_url: str = Field(default="", max_length=800)
+    status: JobStatus = JobStatus.PREPARING
+    notes: str = Field(default="", max_length=20_000)
+    salary_entered: float | None = None
+    required_documents: list[str] = Field(default_factory=list)
+
+    @field_validator("job_id", mode="before")
+    @classmethod
+    def coerce_job_id(cls, v: object) -> int | None:
+        if v is None or v == "":
+            return None
+        if isinstance(v, bool):
+            return int(v)
+        if isinstance(v, int):
+            return v
+        if isinstance(v, (float, str)):
+            try:
+                return int(v)
+            except (TypeError, ValueError):
+                raise ValueError("job_id must be a job id (number)")
+        raise ValueError("job_id must be a job id (number)")
 
 from jobforge_shared.constants import (
     BOARD_COLUMN_MEMBERS,

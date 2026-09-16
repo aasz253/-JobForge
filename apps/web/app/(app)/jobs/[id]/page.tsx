@@ -1,8 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { api } from "@/lib/api";
 import Spinner from "@/components/Spinner";
 import ScoreBar from "@/components/ScoreBar";
@@ -10,9 +9,12 @@ import Stat from "@/components/Stat";
 
 export default function JobDetailPage() {
   const { id } = useParams();
+  const router = useRouter();
   const [job, setJob] = useState<any>(null);
   const [score, setScore] = useState<any>(null);
   const [err, setErr] = useState("");
+  const [appErr, setAppErr] = useState("");
+  const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
     api<any>(`/api/jobs/${id}`)
@@ -22,6 +24,21 @@ export default function JobDetailPage() {
       .then(setScore)
       .catch(() => {});
   }, [id]);
+
+  async function startApplication() {
+    setAppErr("");
+    setSubmitting(true);
+    try {
+      const created = await api<any>("/api/applications", {
+        method: "POST",
+        body: { job_id: Number(job.id) },
+      });
+      router.push(`/applications/${created.id}`);
+    } catch (e: any) {
+      setAppErr(e?.message || "Could not start application");
+      setSubmitting(false);
+    }
+  }
 
   if (err) return <div className="card text-sm text-ember">{err}</div>;
   if (!job) return <Spinner label="Forging job details…" />;
@@ -58,10 +75,11 @@ export default function JobDetailPage() {
               >
                 Original post
               </a>
-              <Link href={`/applications/new?job_id=${job.id}`} className="btn btn-primary">
-                Start application
-              </Link>
+              <button onClick={startApplication} disabled={submitting} className="btn btn-primary">
+                {submitting ? "Starting…" : "Start application"}
+              </button>
             </div>
+            {appErr && <span className="text-xs text-ember">{appErr}</span>}
           </div>
         </div>
       </section>
