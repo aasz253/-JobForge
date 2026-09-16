@@ -41,4 +41,4 @@ services:
     startCommand: 'bash -c ''cp -r .next/static .next/standalone/.next/static; [ -d public ] && cp -r public .next/standalone/public; exec node .next/standalone/server.js'''
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        value: https://jobforge-api.onrender.com
+        value: https://jobforge-api-jw1r.onrender.com
