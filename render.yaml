@@ -27,7 +27,7 @@ services:
       - key: API_PREFIX
         value: /api
       - key: CORS_ORIGINS
-        value: https://jobforge.onrender.com
+        value: https://jobforge-uwj5.onrender.com
       - key: AI_PROVIDER
         value: none
 
