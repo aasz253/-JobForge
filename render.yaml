@@ -11,7 +11,7 @@ services:
     repo: https://github.com/aasz253/-JobForge.git
     rootDir: apps/api
     plan: free
-    buildCommand: pip install -r requirements.txt && for p in ../../packages/*/; do pip install -e "$p" || exit 1; done
+    buildCommand: pip install -r requirements.txt && pip install -e ../../packages/shared ../../packages/scoring ../../packages/ai ../../packages/cv_utils ../../packages/email_intel ../../packages/github_api ../../packages/job_sources
     startCommand: 'bash -c ''URL="$DATABASE_URL"; URL="${URL#postgres://}"; URL="${URL#postgresql://}"; export DATABASE_URL="postgresql+psycopg://$URL"; exec python -m uvicorn app.main:app --host 0.0.0.0 --port "${PORT:-8000}"'''
     envVars:
       - key: DATABASE_URL
