@@ -24,6 +24,8 @@ services:
         generateValue: true
       - key: ENVIRONMENT
         value: prod
+      - key: API_PREFIX
+        value: /api
       - key: CORS_ORIGINS
         value: https://jobforge.onrender.com
       - key: AI_PROVIDER
