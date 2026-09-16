@@ -8,7 +8,7 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
 from sqlalchemy.orm import Session
 
 from app.core.audit import record
-from app.schemas.profile import ProfileIn, ProfileOut, ProjectIn, ProjectOut, SkillIn, SkillOut
+from app.schemas.profile import ProfileIn, ProfileOut, ProfileUpdateIn, ProjectIn, ProjectOut, SkillIn, SkillOut
 
 from ...database import get_db
 from ...models import CandidateProfile, CandidateSkill, CvDocument, Project
@@ -26,9 +26,13 @@ def get_profile(db: Session = Depends(get_db), user: User = Depends(get_current_
 
 
 @router.put("/profile", response_model=ProfileOut)
-def update_profile(payload: ProfileIn, db: Session = Depends(get_db), user: User = Depends(get_current_user)) -> CandidateProfile:
+def update_profile(payload: ProfileUpdateIn, db: Session = Depends(get_db), user: User = Depends(get_current_user)) -> CandidateProfile:
     profile = get_or_create_profile(db, user.id)
-    for field, value in payload.model_dump().items():
+    fields = payload.model_dump()
+    full_name = fields.pop("full_name", "")
+    if full_name and full_name != (user.full_name or ""):
+        user.full_name = full_name
+    for field, value in fields.items():
         setattr(profile, field, value)
     db.commit()
     db.refresh(profile)

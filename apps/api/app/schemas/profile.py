@@ -43,6 +43,12 @@ class ProfileOut(ProfileIn):
     updated_at: datetime
 
 
+class ProfileUpdateIn(ProfileIn):
+    """PUT body: accepts the display name too (handled separately on User)."""
+
+    full_name: str = Field(default="", max_length=200)
+
+
 class SkillIn(BaseModel):
     name: str = Field(min_length=1, max_length=120)
     category: str = Field(default="other", max_length=80)

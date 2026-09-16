@@ -52,19 +52,19 @@ body {
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all;
+    @apply inline-flex items-center justify-center gap-2 rounded-xl px-4 py-2 text-sm font-medium transition-all duration-150 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/70 focus-visible:ring-offset-2 focus-visible:ring-offset-ink active:scale-[0.98];
   }
   .btn:disabled {
     @apply cursor-not-allowed opacity-50;
   }
   .btn-primary {
-    @apply bg-gradient-to-br from-accent via-violet to-blush text-white font-semibold shadow-glow hover:brightness-110;
+    @apply bg-gradient-to-br from-accent via-violet to-blush text-white font-semibold shadow-glow hover:brightness-110 hover:shadow-[0_12px_36px_-12px_rgba(255,92,147,0.7)];
   }
   .btn-ghost {
-    @apply border border-zinc-700 text-zinc-200 hover:border-zinc-500 hover:bg-zinc-900 hover:text-white;
+    @apply border border-zinc-700 text-zinc-200 hover:border-zinc-500 hover:bg-zinc-800/60 hover:text-white;
   }
   .btn-danger {
-    @apply border border-ember/40 text-ember hover:bg-ember/10;
+    @apply border border-ember/40 text-ember hover:border-ember/70 hover:bg-ember/15 hover:text-ember;
   }
   .card {
     @apply rounded-xl border border-zinc-800/70 bg-[#11151c] p-5;

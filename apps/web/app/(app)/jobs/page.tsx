@@ -62,7 +62,7 @@ export default function JobsPage() {
               </div>
             </div>
             <div className="flex shrink-0 items-center gap-3">
-              <span className="pill border-cember/30 text-ember">
+              <span className="pill border-ember/30 text-ember">
                 {j.source?.toUpperCase()}
               </span>
               {typeof j.score === "number" && <ScoreBar score={j.score} />}
