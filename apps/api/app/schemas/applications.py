@@ -6,6 +6,11 @@ from datetime import datetime
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
+from jobforge_shared.constants import (
+    BOARD_COLUMN_MEMBERS,
+    BOARD_COLUMNS,
+    JobStatus,
+)
 
 
 class ApplicationCreateIn(BaseModel):
@@ -33,23 +38,6 @@ class ApplicationCreateIn(BaseModel):
             except (TypeError, ValueError):
                 raise ValueError("job_id must be a job id (number)")
         raise ValueError("job_id must be a job id (number)")
-
-from jobforge_shared.constants import (
-    BOARD_COLUMN_MEMBERS,
-    BOARD_COLUMNS,
-    JobStatus,
-)
-
-
-class ApplicationCreateIn(BaseModel):
-    job_id: int | None = None
-    company: str = Field(default="", max_length=200)
-    title: str = Field(default="", max_length=300)
-    application_url: str = Field(default="", max_length=800)
-    status: JobStatus = JobStatus.PREPARING
-    notes: str = Field(default="", max_length=20_000)
-    salary_entered: float | None = None
-    required_documents: list[str] = Field(default_factory=list)
 
 
 class ApplicationUpdateIn(BaseModel):
