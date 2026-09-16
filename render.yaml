@@ -27,7 +27,7 @@ services:
       - key: API_PREFIX
         value: /api
       - key: CORS_ORIGINS
-        value: https://jobforge-uwj5.onrender.com
+        value: https://jobforge-app.onrender.com
       - key: AI_PROVIDER
         value: openrouter
 
@@ -42,3 +42,7 @@ services:
     envVars:
       - key: NEXT_PUBLIC_API_URL
         value: https://jobforge-api-jw1r.onrender.com
+      - key: NODE_VERSION
+        value: 20.18.0
+      - key: HOSTNAME
+        value: 0.0.0.0
