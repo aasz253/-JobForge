@@ -32,7 +32,7 @@ services:
         value: openrouter
 
   - type: web
-    name: jobforge
+    name: jobforge-app
     runtime: node
     repo: https://github.com/aasz253/-JobForge.git
     rootDir: apps/web
