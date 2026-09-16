@@ -8,12 +8,16 @@ import ScoreBar from "@/components/ScoreBar";
 
 export default function JobsPage() {
   const [jobs, setJobs] = useState<any[]>([]);
+  const [total, setTotal] = useState(0);
   const [err, setErr] = useState("");
   const [q, setQ] = useState("");
 
   useEffect(() => {
-    api<any[]>("/api/jobs")
-      .then(setJobs)
+    api<{ items: any[]; total: number }>("/api/jobs")
+      .then((d) => {
+        setJobs(d.items);
+        setTotal(d.total);
+      })
       .catch((e: any) => setErr(e?.message || "Could not list jobs"));
   }, []);
 
@@ -25,7 +29,7 @@ export default function JobsPage() {
         <div>
           <h1 className="text-xl font-bold text-zinc-100">Jobs</h1>
           <p className="mt-0.5 text-sm text-zinc-500">
-            {jobs.length} discovered · sorted by qualification score
+            {total} discovered · sorted by qualification score
           </p>
         </div>
         <div className="flex gap-2">

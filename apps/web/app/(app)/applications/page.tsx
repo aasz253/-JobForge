@@ -36,8 +36,8 @@ export default function ApplicationsPage() {
     api<any[]>("/api/applications")
       .then(setApps)
       .catch((e: any) => setErr(e?.message || "Could not load applications."));
-    api<any[]>("/api/jobs")
-      .then(setJobs)
+    api<{ items: any[]; total: number }>("/api/jobs")
+      .then((d) => setJobs(d.items))
       .catch(() => {});
   }, []);
 
