@@ -20,7 +20,7 @@ export default function HomePage() {
         />
         <header className="relative mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
           <a href="/" className="font-mono text-xl font-bold tracking-tight text-zinc-100">
-            JOB<span className="text-accent">FORGE</span>
+            JOB<span className="bg-gradient-to-r from-accent via-violet to-blush bg-clip-text text-transparent">FORGE</span>
           </a>
           <nav className="flex items-center gap-6 text-sm text-zinc-400">
             <a className="hidden hover:text-zinc-200 sm:block" href="#ethics">Ethics</a>

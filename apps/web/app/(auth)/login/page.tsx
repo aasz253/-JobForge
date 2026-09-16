@@ -33,7 +33,7 @@ export default function LoginPage() {
     <main className="flex min-h-screen items-center justify-center px-4">
       <div className="w-full max-w-sm">
         <Link href="/" className="mb-8 block font-mono text-2xl font-bold tracking-tight text-zinc-100">
-          JOB<span className="text-accent">FORGE</span>
+          JOB<span className="bg-gradient-to-r from-accent via-violet to-blush bg-clip-text text-transparent">FORGE</span>
         </Link>
         <div className="card">
           <h1 className="text-lg font-semibold text-zinc-100">Log in</h1>

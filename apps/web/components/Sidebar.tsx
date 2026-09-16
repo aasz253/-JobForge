@@ -18,7 +18,7 @@ export default function Sidebar() {
   return (
     <aside className="flex w-56 flex-col gap-1 border-r border-ink-lightest bg-ink px-3 py-5">
       <Link href="/" className="mb-6 px-2 font-mono text-lg font-bold tracking-tight text-zinc-100">
-        JOB<span className="text-ember">FORGE</span>
+        JOB<span className="bg-gradient-to-r from-accent via-violet to-blush bg-clip-text text-transparent">FORGE</span>
       </Link>
       <nav className="flex flex-col gap-0.5">
         {nav.map((n) => {

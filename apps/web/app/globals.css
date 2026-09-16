@@ -10,6 +10,8 @@
   --ember-soft: #da2033;
   --content: #2f81f7;
   --content-soft: #1f6feb;
+  --violet: #8b5cf6;
+  --blush: #ff5c93;
 }
 
 * {
@@ -50,16 +52,16 @@ body {
 
 @layer components {
   .btn {
-    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-colors;
+    @apply inline-flex items-center justify-center gap-2 rounded-lg px-4 py-2 text-sm font-medium transition-all;
   }
   .btn:disabled {
     @apply cursor-not-allowed opacity-50;
   }
   .btn-primary {
-    @apply bg-content text-white hover:bg-content-soft;
+    @apply bg-gradient-to-br from-accent via-violet to-blush text-white font-semibold shadow-glow hover:brightness-110;
   }
   .btn-ghost {
-    @apply border border-zinc-800 text-zinc-300 hover:border-zinc-700 hover:bg-zinc-900;
+    @apply border border-zinc-700 text-zinc-200 hover:border-zinc-500 hover:bg-zinc-900 hover:text-white;
   }
   .btn-danger {
     @apply border border-ember/40 text-ember hover:bg-ember/10;
@@ -68,7 +70,7 @@ body {
     @apply rounded-xl border border-zinc-800/70 bg-[#11151c] p-5;
   }
   .input {
-    @apply w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-200 placeholder-zinc-600 outline-none transition-colors focus:border-content/60;
+    @apply w-full rounded-lg border border-zinc-800 bg-zinc-900/60 px-3 py-2 text-sm text-zinc-200 placeholder-zinc-500 outline-none transition-all focus:border-accent/70 focus:ring-2 focus:ring-accent/25;
   }
   .label {
     @apply mb-1.5 block text-xs font-medium text-zinc-400;
