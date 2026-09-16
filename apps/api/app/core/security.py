@@ -46,9 +46,11 @@ def hash_token(token: str) -> str:
 
 
 def utcnow() -> datetime:
-    # SQLite stores naive datetimes even when a column declares timezone=True,
-    # so compare consistently in naive UTC to avoid offset-aware/naive errors.
-    return datetime.now(timezone.utc).replace(tzinfo=None)
+    # PostgreSQL (timestamptz) returns timezone-aware datetimes; produce aware
+    # UTC so comparisons are always consistent. SQLite returns naive datetimes
+    # regardless of a column's timezone=True flag, so callers must normalize
+    # stored values to aware before comparing (see api/deps.py).
+    return datetime.now(timezone.utc)
 
 
 # ---------------------------------------------------------------------------

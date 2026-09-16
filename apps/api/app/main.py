@@ -10,6 +10,7 @@ FastAPI application with security-hardened defaults:
 
 from __future__ import annotations
 
+import logging
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, Request
@@ -21,6 +22,8 @@ from app.core.ratelimit import limiter
 
 from .api.routes import applications, auth, dashboard, finance, health, jobs, profile, settings
 from .database import init_db
+
+logger = logging.getLogger("jobforge.api")
 
 API_VERSION = "0.1.0"
 
@@ -81,7 +84,8 @@ async def global_rate_limit(request: Request, call_next):
 
 @app.exception_handler(Exception)
 async def unhandled_exception_handler(request: Request, exc: Exception):
-    """Never leak internal error details to clients."""
+    """Never leak internal error details to clients, but always log them."""
+    logger.exception("Unhandled exception on %s %s", request.method, request.url.path, exc_info=exc)
     return JSONResponse(status_code=500, content={"detail": "Internal error."})
 
 
